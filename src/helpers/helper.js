@@ -20,3 +20,9 @@ export const getRelation = (matr, token) => {
 	.then(res => res.json())
 	.catch(err => {console.log(err);})
 }
+
+export const getMatter = (matr) => {
+	return fetch(`http://localhost:5000/matter/${matr}`)
+	.then(res => res.json())
+	.catch(err => { console.log(err); })
+}
