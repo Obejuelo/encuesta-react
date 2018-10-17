@@ -25,6 +25,7 @@ class Loginform extends Component {
 						label={this.props.name}
 						type="text"
 						margin="normal"
+						color="secondary"
 						style={{width: '100%'}}
 					/>
 					<TextField

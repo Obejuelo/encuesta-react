@@ -1,5 +1,8 @@
+import config from './config';
+const url = config.url;
+
 export const logIn = (body) => {
-	return fetch(`http://localhost:5000/login`,{
+	return fetch(`${url}login`,{
 		method: 'POST',
 		body: JSON.stringify(body),
 		headers: {
@@ -12,7 +15,7 @@ export const logIn = (body) => {
 }
 
 export const getRelation = (matr, token) => {
-	return fetch(`http://localhost:5000/relation/student/${matr}`,{
+	return fetch(`${url}relation/student/${matr}`,{
 		headers: {
 			'token': token
 		}
@@ -22,7 +25,20 @@ export const getRelation = (matr, token) => {
 }
 
 export const getMatter = (matr) => {
-	return fetch(`http://localhost:5000/matter/${matr}`)
+	return fetch(`${url}matter/${matr}`)
 	.then(res => res.json())
 	.catch(err => { console.log(err); })
 }
+
+export const getTeacher = (teacher) => {
+	return fetch(`${url}teacher/name/${teacher}`)
+		.then(res => res.json())
+		.catch(err => { console.log(err); })
+}
+
+//GET QUESTIONS
+ export const getQuestion = () => {
+	 return fetch(`${url}question`)
+		 .then(res => res.json())
+		 .catch(err => { console.log(err); })
+ }

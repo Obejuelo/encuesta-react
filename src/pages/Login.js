@@ -16,9 +16,12 @@ class Login extends Component {
 	sendData = (body) => {
 		logIn(body)
 			.then(data => {
-				this.props.dispatch(actions.login(data.jwt))
 				this.props.dispatch(actions.loadUser(data.user))
-				this.props.dispatch(push('/'))
+				this.props.dispatch(actions.login(data.jwt))
+				setTimeout(() => {
+					
+					this.props.dispatch(push('/'))
+				}, 1500);
 			})
 	}
 

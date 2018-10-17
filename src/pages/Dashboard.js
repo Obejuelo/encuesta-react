@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Appbar from '../components/navigation/Appbar';
-import {getRelation, getMatter} from '../helpers/helper';
+import { getRelation } from '../helpers/helper';
 import {connect} from 'react-redux';
 
 import Table from '@material-ui/core/Table';
@@ -10,12 +10,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+
+import {Link, withRouter} from 'react-router-dom';
 
 class Dashboard extends Component {
+
 	state = {
-		matters: [],
-		name: [],
-		teacher:[]
+		relation: []
 	}
 
 	componentDidMount(){
@@ -31,76 +33,64 @@ class Dashboard extends Component {
 		let token = this.props.user.jwt;
 		getRelation(matr, token)
 			.then(data => {
-				this.setState({matters: data})
-				data.forEach(name => {
-					this._setName(name.clave)
-				});
-			})
-		
-	}
-
-	_setName = (matr) => {
-		let nombre = this.state.name;
-		getMatter(matr)
-			.then(data => {
-				console.log(data);
-				nombre.push(data)
-				this.setState({name: nombre })
+				this.setState({relation: data})
 			})
 	}
 
-	adName =() => {
-		this.state.name.map(ds => {
-			console.log(ds);
-			return `${ds}`
-			
-		})
+	_qualify = (materia, maestro) => {
+		let matr = document.getElementById('LA0101').innerText;
+		console.log(matr);
 	}
 
 	render() {
-		// if (this.state.name.length === this.state.matters.length) { this.state.name.map(ds => {
-		// 	console.log(ds);
-		// })}
 		return (
 			<div>
 				<Appbar/>
+				<Button 
+					variant="fab"
+					aria-label="Edit"
+					style={{ background: '#006064', color: '#f2f2f2', position: 'absolute', bottom: '2em', right: '2em'}}>
+					<AddIcon />
+				</Button>
 				<div className="container">
-					{/* <li>{this.props.user.ciclo}</li>
-					<li>{this.props.user.matricula}</li>
-					<li>{this.props.user.nombre}</li>
-					<li>{this.props.user.grupo}</li> */}
-					{/* {this.state.token.length !== 0 ? this._getRelation() : ''} */}
-
 					<h1 style={{textAlign: 'center'}}>{this.props.user.grupo}</h1>
-
 					<div className="row">
 						<div className="col-xs-12 col-md-10 col-lg-10">
-
+							<Paper >
+								<Table >
+									<TableHead>
+										<TableRow>
+											<TableCell>Materia</TableCell>
+											<TableCell numeric>Maestro</TableCell>
+											<TableCell numeric>calificar</TableCell>
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										{this.state.relation.map((materia, idx) => {
+											return (
+												<TableRow key={materia._id}>
+													<TableCell>{materia.materia}</TableCell>
+													<TableCell>{materia.maestro}</TableCell>
+													<TableCell>
+														<Link 
+															to={`califica/${materia.materia}/${materia.maestro}`}
+															style={{textDecoration: 'none'}} 
+															mtro={materia.maestro}
+															mtra={materia.materia}>
+															<Button
+																variant="outlined"
+																size="small">
+																Calificar
+															</Button>
+														</Link>
+													</TableCell>
+												</TableRow>
+											)
+										})}
+									</TableBody>
+								</Table>
+							</Paper>
 						</div>
-						<Paper >
-							<Table >
-								<TableHead>
-									<TableRow>
-										<TableCell>Materia</TableCell>
-										<TableCell numeric>Maestro</TableCell>
-										<TableCell numeric>calificar</TableCell>
-									</TableRow>
-								</TableHead>
-								<TableBody>
-									{this.state.matters.map(row => {
-										return (
-											<TableRow key={row._id}>
-												<TableCell component="th" scope="row">
-													{this.state.name.length === this.state.matters.length ? this.adName() : ''}
-												</TableCell>
-												<TableCell numeric>{row.codigo}</TableCell>
-												<TableCell numeric></TableCell>
-											</TableRow>
-										);
-									})}
-								</TableBody>
-							</Table>
-						</Paper>
 					</div>
 				</div>
 			</div>
@@ -114,4 +104,4 @@ function mapeStateToProps(state, ownProps) {
 	}
 }
  
-export default connect(mapeStateToProps) (Dashboard);
+export default withRouter(connect(mapeStateToProps)(Dashboard));

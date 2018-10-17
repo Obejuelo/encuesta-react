@@ -4,12 +4,14 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 
 import {logOut} from '../../actions/userActions';;
 
 class Appbar extends Component {
 	logOut = () => {
 		this.props.dispatch(logOut());
+		this.props.history.push('/');
 	}
 	render() { 
 		return ( 
@@ -32,4 +34,4 @@ function mapeStateToProps(state, ownProps) {
 	}
 }
  
-export default connect(mapeStateToProps)(Appbar);
+export default withRouter(connect(mapeStateToProps)(Appbar));
