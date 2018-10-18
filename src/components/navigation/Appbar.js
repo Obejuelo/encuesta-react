@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
@@ -17,10 +17,9 @@ class Appbar extends Component {
 		return ( 
 			<AppBar position="static" style={{ background: '#006064'}}>
 				<Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
-					<IconButton color="inherit" aria-label="Menu">
-						{this.props.user.nombre}
-					</IconButton>
-					
+					<Link to="/" style={{textDecoration: 'none', color: "#f5f5f5"}}>
+						<h3 color="inherit" aria-label="Menu">{this.props.user.nombre}</h3>
+					</Link>
 					<Button color="inherit" style={{float: 'right'}} onClick={this.logOut}>Logout</Button>
 				</Toolbar>
 			</AppBar>

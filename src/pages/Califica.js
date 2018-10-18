@@ -7,16 +7,14 @@ class Califica extends Component {
 	
 	state = {}
 	render() { 
-		// console.log(this.props.match.params);
 		const { maestro, materia } = this.props.match.params;
 		return (
 			<div>
 				<Appbar/>
 				<div className="container">
-					<div className="row">
-						<div className="col-xs-12 col-sm-12 col md-10">
-							{/* <h1 style={{textAlign: 'center'}}>Formulario de preguntas</h1> */}
-							<Formquestions/>
+					<div className="row center-xs">
+						<div className="col-xs-12 col-sm-12 col-md-8">
+							<Formquestions maestro={maestro} materia={materia}/>
 						</div>
 					</div>
 				</div>

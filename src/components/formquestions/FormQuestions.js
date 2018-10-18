@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { getQuestion } from '../../helpers/helper';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
+import { getQuestion, setResp} from '../../helpers/helper';
+import './style.css';
+import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 
-import Answers from './AnswerGroup';
+import {connect} from 'react-redux';
 
 class Formquestions extends Component {
 
-	state = {
+	state= {
 		questions: []
 	}
 
@@ -18,32 +18,74 @@ class Formquestions extends Component {
 		})
 	}
 
-	_sendForm(){
-		let answer = document.querySelectorAll('.label');
-		
-		console.log(answer[0].lastChild);
+	_sendResp = () => {
+		const token = this.props.user.jwt;
+		this.state.questions.forEach((quest, idx) => {
+			let index = idx+1;
+			let resp = document.getElementById(`resp${index}`);
+			let select = resp.options[resp.selectedIndex].text;
+
+			let body = {
+				maestro: this.props.maestro,
+				materia: this.props.materia,
+				pregunta: quest,
+				resp: select
+			}
+			// console.log(body);
+			setResp(body, token).then(data => {
+				console.log(data);
+			})
+		})
 	}
 
 	render() { 
 		return (
-			<form style={{ textAlign: 'center', width: '100%', margin: '30px 0'}}>
-				{this.state.questions.map((question, idx) => {
+			<div style={{textAlign: 'center', marginTop: '10px'}}>
+				<Card style={{
+						width: '250px',
+						marginRight: 'auto',
+						marginLeft: 'auto',
+						background: '#fff',
+						color:'#005f63'
+					}}>
+					<div style={{padding: '10px 0px'}}>
+						<h4>{this.props.materia}</h4>
+						<h5>{this.props.maestro}</h5>
+					</div>
+				</Card>
+				{this.state.questions.map((ques, idx) => {
 					return(
-						<FormControl key={question._id} style={{width: '100%'}} className={`label`}>
-							<FormLabel>{question.nombre}</FormLabel>
-							<Answers quest={question.nombre} send={this._sendForm}/>
-						</FormControl>
+						<Card 
+							key={ques._id}
+							style={{margin: '20px 0'}}>
+							<div style={{padding: '12px 0px'}}>
+								<label className="label">{ques.nombre}  </label>
+								<select name="resp" id={`resp${idx+1}`} className="select">
+									<option value="Excelente">Excelente</option>
+									<option value="Bueno">Bueno</option>
+									<option value="Regular">Regular</option>
+									<option value="Malo">Malo</option>
+									<option value="Muy-malo">Muy malo</option>
+								</select>
+							</div>
+						</Card>							
 					)
 				})}
-				<Button
-					onClick={this._sendForm}
-					variant="contained"
-					style={{ marginBottom: '10px', background: '#006064', color: '#fff' }}>
+				<Button 
+					onClick={this._sendResp}
+					color="inherit" 
+					style={{ background: '#005f63', color: '#f2f2f2' }}>
 					Enviar
 				</Button>
-			</form>
+			</div>
 		);
 	}
 }
+
+const mapeStateToProps = (state, ownProps) => {
+	return {
+		user: state.user
+	}
+}
  
-export default Formquestions;
+export default connect(mapeStateToProps)(Formquestions);

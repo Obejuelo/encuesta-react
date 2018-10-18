@@ -42,3 +42,17 @@ export const getTeacher = (teacher) => {
 		 .then(res => res.json())
 		 .catch(err => { console.log(err); })
  }
+
+ export const setResp = (body, token) => {
+	 return fetch(`${url}answer`, {
+		 method: 'POST',
+		 body: JSON.stringify(body),
+		 headers: {
+			 'Content-Type': 'application/json',
+			 'Accept': 'application/json',
+			 'token': token
+		 }
+	 })
+		 .then(res => res.json())
+		 .catch(err => { console.log(err); })
+ }
