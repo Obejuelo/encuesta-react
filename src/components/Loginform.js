@@ -7,11 +7,19 @@ class Loginform extends Component {
 	state = {}
 
 	signIn = () => {
-		let nombre = document.getElementById('name').value;
-		let matricula = document.getElementById('pass').value;
+		let user = document.getElementById('name').value;
+		let pass = document.getElementById('pass').value;
 
-		let body = {nombre, matricula};
+		let bodyUser = {nombre:user, matricula:pass};
+		let bodyAmin = {email: user,password: pass}
+		let body = {};
 
+		if(this.props.user === 'Admin'){
+			body = bodyAmin;
+		} else {
+			body = bodyUser;
+		}
+		
 		this.props.login(body);
 	}
 
@@ -19,7 +27,7 @@ class Loginform extends Component {
 		return (
 			<Card>
 				<form className="form-login" style={{textAlign:'center'}}>
-					<h4 style={{textAlign: 'center', marginBottom: '-10px'}}>Login</h4>
+					<h4 style={{textAlign: 'center', marginBottom: '-10px'}}>{this.props.user}</h4>
 					<TextField
 						id="name"
 						label={this.props.name}

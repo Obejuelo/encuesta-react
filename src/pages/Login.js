@@ -28,7 +28,11 @@ class Login extends Component {
 	render() { 
 		return (
 			<div style={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#f5f5f5'}}>
-				<Loginform name='Nombre' pass='Clave' login={this.sendData}/>
+				<Loginform 
+					name='Nombre' 
+					pass='Clave'
+					user="Login" 
+					login={this.sendData}/>
 			</div>
 		);
 	}

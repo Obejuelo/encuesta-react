@@ -8,7 +8,10 @@ export default function userReducer(state = {}, action) {
 				nombre: action.user.nombre,
 				ciclo: action.user.ciclo,
 				matricula: action.user.matricula,
-				grupo: action.user.grupo
+				grupo: action.user.grupo,
+				email: action.user.email,
+				name: action.user.name
+				
 			})
 		case 'LOG_OUT':
 			return {}

@@ -48,11 +48,10 @@ class Dashboard extends Component {
 				<Appbar/>
 				<Button 
 					variant="fab"
-					aria-label="Edit"
-					style={{ background: '#006064', color: '#f2f2f2', position: 'absolute', bottom: '2em', right: '2em'}}>
+					className="FAB">
 					<AddIcon />
 				</Button>
-				<div className="container">
+				<div className="container" style={{ maxWidth: '100%' }}>
 					<h1 style={{textAlign: 'center'}}>{this.props.user.grupo}</h1>
 					<div className="row">
 						<div className="col-xs-12 col-md-10 col-lg-10">

@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
-import {logOut} from '../../actions/userActions';;
+import {logOut} from '../../actions/userActions';
 
 class Appbar extends Component {
 	logOut = () => {

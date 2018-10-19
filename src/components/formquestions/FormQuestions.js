@@ -3,7 +3,7 @@ import { getQuestion, setResp} from '../../helpers/helper';
 import './style.css';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
-
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 class Formquestions extends Component {
@@ -21,7 +21,7 @@ class Formquestions extends Component {
 	_sendResp = () => {
 		const token = this.props.user.jwt;
 		this.state.questions.forEach((quest, idx) => {
-			let index = idx+1;
+			let index = idx + 1;
 			let resp = document.getElementById(`resp${index}`);
 			let select = resp.options[resp.selectedIndex].text;
 
@@ -77,6 +77,15 @@ class Formquestions extends Component {
 					style={{ background: '#005f63', color: '#f2f2f2' }}>
 					Enviar
 				</Button>
+				<Link 
+					to="/"
+					style={{
+						textDecoration: 'none',
+						color: '#005f63',
+						float: 'right'
+
+						}}>
+					Regresar</Link>
 			</div>
 		);
 	}

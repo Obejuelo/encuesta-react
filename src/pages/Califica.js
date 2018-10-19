@@ -13,7 +13,7 @@ class Califica extends Component {
 				<Appbar/>
 				<div className="container">
 					<div className="row center-xs">
-						<div className="col-xs-12 col-sm-12 col-md-8">
+						<div className="col-sm-12 col-md-8" style={{width: '100%'}}>
 							<Formquestions maestro={maestro} materia={materia}/>
 						</div>
 					</div>
