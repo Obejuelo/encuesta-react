@@ -15,6 +15,7 @@ export const logIn = (body) => {
 	.catch(err => {console.log(err);})
 }
 
+//GET RELATIONS STUDENTS MATTERS
 export const getRelation = (matr, token) => {
 	return fetch(`${url}relation/student/${matr}`,{
 		headers: {
@@ -26,7 +27,6 @@ export const getRelation = (matr, token) => {
 }
 
 //LOGIN ADMIN
-
 export const loginAdmin = (body) => {
 	return fetch(`${url}session`, {
 		method: 'POST',
@@ -47,6 +47,7 @@ export const loginAdmin = (body) => {
 		 .catch(err => { console.log(err); })
  }
 
+ //SEND ANSWERS
  export const setResp = (body, token) => {
 	 return fetch(`${url}answer`, {
 		 method: 'POST',
@@ -57,6 +58,21 @@ export const loginAdmin = (body) => {
 			 'token': token
 		 }
 	 })
+		 .then(res => res.json())
+		 .catch(err => { console.log(err); })
+ }
+
+ //GET NAME MATTER
+ export const getMatter =(matter) => {
+	 return fetch(`${url}matter/${matter}`)
+		 .then(res => res.json())
+		 .catch(err => { console.log(err); })
+ }
+
+ //GET STUDENT AND MATTER
+
+ export const getStudentAndMatter = (student, matter) => {
+	 return fetch(`${url}answer/${student}/${matter}`)
 		 .then(res => res.json())
 		 .catch(err => { console.log(err); })
  }

@@ -36,7 +36,7 @@ class Home extends Component {
 		return (
 			<Switch>
 				<Route exact path="/" component={this.home()} />
-				<Route exact path="/califica/:materia/:maestro" component={Califica} />
+				<Route exact path="/califica/:materia" component={Califica} />
 				<Route exact path="/admin" component={this.admin()} />
 			</Switch>
 		);

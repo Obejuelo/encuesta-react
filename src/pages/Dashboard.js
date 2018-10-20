@@ -26,6 +26,7 @@ class Dashboard extends Component {
 		} else {
 			this._getRelation()
 		}
+		this._getAnswer();
 	}
 
 	_getRelation = () => {
@@ -37,9 +38,35 @@ class Dashboard extends Component {
 			})
 	}
 
-	_qualify = (materia, maestro) => {
-		let matr = document.getElementById('LA0101').innerText;
-		console.log(matr);
+	_getAnswer = () => {
+		// console.log('holi');
+		setTimeout(() => {
+			console.log(this.state.relation);
+		}, 500);
+	}
+
+	_renderRelation(){
+		return this.state.relation.map((materia, idx) => {
+			return (
+				<TableRow key={materia._id}>
+					<TableCell>{materia.materia}</TableCell>
+					<TableCell>{materia.maestro}</TableCell>
+					<TableCell>
+						<Link
+							to={`califica/${materia.clave}`}
+							style={{ textDecoration: 'none' }}
+							mtro={materia.maestro}
+							mtra={materia.materia}>
+							<Button
+								variant="outlined"
+								size="small">
+								Calificar
+							</Button>
+						</Link>
+					</TableCell>
+				</TableRow>
+			)
+		})
 	}
 
 	render() {
@@ -60,32 +87,12 @@ class Dashboard extends Component {
 									<TableHead>
 										<TableRow>
 											<TableCell>Materia</TableCell>
-											<TableCell numeric>Maestro</TableCell>
-											<TableCell numeric>calificar</TableCell>
+											<TableCell>Maestro</TableCell>
+											<TableCell>calificar</TableCell>
 										</TableRow>
 									</TableHead>
 									<TableBody>
-										{this.state.relation.map((materia, idx) => {
-											return (
-												<TableRow key={materia._id}>
-													<TableCell>{materia.materia}</TableCell>
-													<TableCell>{materia.maestro}</TableCell>
-													<TableCell>
-														<Link 
-															to={`califica/${materia.materia}/${materia.maestro}`}
-															style={{textDecoration: 'none'}} 
-															mtro={materia.maestro}
-															mtra={materia.materia}>
-															<Button
-																variant="outlined"
-																size="small">
-																Calificar
-															</Button>
-														</Link>
-													</TableCell>
-												</TableRow>
-											)
-										})}
+										{this._renderRelation()}
 									</TableBody>
 								</Table>
 							</Paper>

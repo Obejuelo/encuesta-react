@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getQuestion, setResp} from '../../helpers/helper';
+import { getQuestion, setResp, getMatter} from '../../helpers/helper';
 import './style.css';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
@@ -9,13 +9,13 @@ import {connect} from 'react-redux';
 class Formquestions extends Component {
 
 	state= {
-		questions: []
+		questions: [],
+		matter: {}
 	}
 
 	componentDidMount(){
-		getQuestion().then(data => {
-			this.setState({questions: data})
-		})
+		this._getQuestions();
+		this._getMatter();
 	}
 
 	_sendResp = () => {
@@ -26,16 +26,29 @@ class Formquestions extends Component {
 			let select = resp.options[resp.selectedIndex].text;
 
 			let body = {
-				maestro: this.props.maestro,
-				materia: this.props.materia,
-				pregunta: quest,
+				alumno: this.props.id,
+				materia: this.state.matter.clave,
+				pregunta: quest._id,
 				resp: select
 			}
 			// console.log(body);
 			setResp(body, token).then(data => {
-				console.log(data);
+				console.log('Egistro exitoso');
 			})
 		})
+	}
+
+	_getQuestions = () => {
+		getQuestion().then(data => {
+			this.setState({ questions: data })
+		})
+	}
+
+	_getMatter = () => {
+		getMatter(this.props.materia)
+			.then(data => {
+				this.setState({matter: data})
+			})
 	}
 
 	render() { 
@@ -49,8 +62,8 @@ class Formquestions extends Component {
 						color:'#005f63'
 					}}>
 					<div style={{padding: '10px 0px'}}>
-						<h4>{this.props.materia}</h4>
-						<h5>{this.props.maestro}</h5>
+						<h4>{this.state.matter.nombre}</h4>
+						<h5>{this.state.matter.maestro}</h5>
 					</div>
 				</Card>
 				{this.state.questions.map((ques, idx) => {

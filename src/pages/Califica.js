@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 import Appbar from '../components/navigation/Appbar';
+import {connect} from 'react-redux';
 
 import Formquestions from '../components/formquestions/FormQuestions';
 
 class Califica extends Component {
+
+	componentDidMount(){
+		// console.log(this.props.user);
+	}
 	
 	state = {}
 	render() { 
-		const { maestro, materia } = this.props.match.params;
+		const { materia } = this.props.match.params;
 		return (
 			<div>
 				<Appbar/>
 				<div className="container">
 					<div className="row center-xs">
 						<div className="col-sm-12 col-md-8" style={{width: '100%'}}>
-							<Formquestions maestro={maestro} materia={materia}/>
+							<Formquestions materia={materia} id={this.props.user._id}/>
 						</div>
 					</div>
 				</div>
@@ -22,5 +27,10 @@ class Califica extends Component {
 		);
 	}
 }
- 
-export default Califica;
+
+function mapeStateToProps(state, ownProps){
+	return{
+		user: state.user
+	}
+}
+export default connect(mapeStateToProps)(Califica);
