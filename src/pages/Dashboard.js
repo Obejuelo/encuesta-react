@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Appbar from '../components/navigation/Appbar';
-import { getRelation } from '../helpers/helper';
+import { getRelation, getStudentAndMatter } from '../helpers/helper';
 import {connect} from 'react-redux';
 
 import Table from '@material-ui/core/Table';
@@ -17,7 +17,8 @@ import {Link, withRouter} from 'react-router-dom';
 class Dashboard extends Component {
 
 	state = {
-		relation: []
+		relation: [],
+		answers: []
 	}
 
 	componentDidMount(){
@@ -39,10 +40,47 @@ class Dashboard extends Component {
 	}
 
 	_getAnswer = () => {
-		// console.log('holi');
 		setTimeout(() => {
-			console.log(this.state.relation);
+			let student = this.props.user._id;
+			this.state.relation.forEach(res => {
+				let answer = this.state.answers;
+				getStudentAndMatter(student, res.clave)
+					.then(data => {
+						if (data !== null) {
+							answer.push(data);
+						}
+						this.setState({answers: answer})
+					})
+			})
 		}, 500);
+	}
+
+	_renderButton = (name) => {
+		let filter = this.state.answers.filter((matr) => {
+			return name === matr.materia;
+		})
+		if (filter.length !== 0) {
+			return(
+				<Link to='/' style={{ textDecoration: 'none', pointerEvents: 'none' }}>
+					<Button
+						disabled
+						variant="outlined"
+						size="small">
+						calificado
+					</Button>
+				</Link>
+			)
+		} else {
+			return(
+				<Link to={`califica/${name}`} style={{ textDecoration: 'none' }}>
+					<Button
+						variant="outlined"
+						size="small">
+						califica
+					</Button>
+				</Link>
+			)
+		}
 	}
 
 	_renderRelation(){
@@ -52,17 +90,7 @@ class Dashboard extends Component {
 					<TableCell>{materia.materia}</TableCell>
 					<TableCell>{materia.maestro}</TableCell>
 					<TableCell>
-						<Link
-							to={`califica/${materia.clave}`}
-							style={{ textDecoration: 'none' }}
-							mtro={materia.maestro}
-							mtra={materia.materia}>
-							<Button
-								variant="outlined"
-								size="small">
-								Calificar
-							</Button>
-						</Link>
+						{this._renderButton(materia.clave)}
 					</TableCell>
 				</TableRow>
 			)

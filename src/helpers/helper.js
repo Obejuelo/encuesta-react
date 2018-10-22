@@ -70,7 +70,6 @@ export const loginAdmin = (body) => {
  }
 
  //GET STUDENT AND MATTER
-
  export const getStudentAndMatter = (student, matter) => {
 	 return fetch(`${url}answer/${student}/${matter}`)
 		 .then(res => res.json())
