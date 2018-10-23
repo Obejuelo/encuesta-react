@@ -8,6 +8,11 @@ import Califica from './Califica';
 import Admin from './Admin';
 import Administrator from './Administrator';
 
+import {
+	CSSTransition,
+	TransitionGroup,
+} from 'react-transition-group';
+
 //const userRegister = true;
 
 class Home extends Component {
@@ -34,11 +39,22 @@ class Home extends Component {
 
 	render() { 
 		return (
-			<Switch>
-				<Route exact path="/" component={this.home()} />
-				<Route exact path="/califica/:materia" component={Califica} />
-				<Route exact path="/admin" component={this.admin()} />
-			</Switch>
+			<div>
+				<Route render={({location}) => (
+					<TransitionGroup>
+						<CSSTransition
+							key={location.key}
+							timeout={300}
+							classNames="fade">
+							<Switch location={location}>
+								<Route exact path="/" component={this.home()} />
+								<Route exact path="/califica/:materia" component={Califica} />
+								<Route exact path="/admin" component={this.admin()} />
+							</Switch>
+						</CSSTransition>
+					</TransitionGroup>
+				)}/>
+			</div>
 		);
 	}
 }

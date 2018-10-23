@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
 	router: routerReducer
 })
 
-export default function configureStore(middleware) {
+export default function configureStore(middleware){
 	return createStore(
 		rootReducer,
 		applyMiddleware(middleware, thunk),

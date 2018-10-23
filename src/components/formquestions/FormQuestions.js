@@ -1,21 +1,29 @@
 import React, { Component } from 'react';
-import { getQuestion, setResp, getMatter} from '../../helpers/helper';
+import { getQuestion, setResp, getMatter, getStudentAndMatter} from '../../helpers/helper';
 import './style.css';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 class Formquestions extends Component {
 
 	state= {
 		questions: [],
-		matter: {}
+		matter: {},
+		answers: null
 	}
 
 	componentDidMount(){
 		this._getQuestions();
 		this._getMatter();
+		this._getAnswer();
+		setTimeout(() => {
+			if (this.state.answers !== null) {
+				this.props.history.push('/')
+			}
+		}, 0);
+		
 	}
 
 	_sendResp = () => {
@@ -31,11 +39,14 @@ class Formquestions extends Component {
 				pregunta: quest._id,
 				resp: select
 			}
-			// console.log(body);
+
 			setResp(body, token).then(data => {
-				console.log('Egistro exitoso');
+				// console.log('Egistro exitoso');
 			})
 		})
+
+		alert('registro exitoso');
+		this.props.history.push('/')
 	}
 
 	_getQuestions = () => {
@@ -51,9 +62,18 @@ class Formquestions extends Component {
 			})
 	}
 
+	_getAnswer = () => {
+		let student = this.props.user._id;
+		let matter = this.props.materia;
+		getStudentAndMatter(student, matter)
+			.then(data => {
+				this.setState({ answers: data })
+			})
+	}
+
 	render() { 
 		return (
-			<div style={{textAlign: 'center', marginTop: '10px'}}>
+			<div style={{textAlign: 'center', marginTop: '10px', padding: '0 5px'}}>
 				<Card style={{
 						width: '250px',
 						marginRight: 'auto',
@@ -90,15 +110,19 @@ class Formquestions extends Component {
 					style={{ background: '#005f63', color: '#f2f2f2' }}>
 					Enviar
 				</Button>
-				<Link 
-					to="/"
-					style={{
-						textDecoration: 'none',
-						color: '#005f63',
-						float: 'right'
+				<div>
+					<Link
+						to="/"
+						style={{
+							textDecoration: 'none',
+							color: '#005f63',
+							float: 'right'
 
 						}}>
-					Regresar</Link>
+						Regresar
+					</Link>
+				</div>
+				
 			</div>
 		);
 	}
@@ -110,4 +134,4 @@ const mapeStateToProps = (state, ownProps) => {
 	}
 }
  
-export default connect(mapeStateToProps)(Formquestions);
+export default withRouter(connect(mapeStateToProps)(Formquestions));

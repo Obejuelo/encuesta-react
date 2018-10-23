@@ -66,7 +66,7 @@ class Dashboard extends Component {
 						disabled
 						variant="outlined"
 						size="small">
-						calificado
+						califica
 					</Button>
 				</Link>
 			)
@@ -99,7 +99,7 @@ class Dashboard extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="page">
 				<Appbar/>
 				<Button 
 					variant="fab"
@@ -108,9 +108,9 @@ class Dashboard extends Component {
 				</Button>
 				<div className="container" style={{ maxWidth: '100%' }}>
 					<h1 style={{textAlign: 'center'}}>{this.props.user.grupo}</h1>
-					<div className="row">
+					<div className="row center-xs" style={{margin: '0'}}>
 						<div className="col-xs-12 col-md-10 col-lg-10">
-							<Paper >
+							<Paper>
 								<Table >
 									<TableHead>
 										<TableRow>
