@@ -1,0 +1,59 @@
+.sidebar{
+	position: fixed;
+	background: #006064;
+	min-width: 250px;
+	min-height: 100vh;
+	color: #f5f5f5;
+}
+.logo{
+	position: absolute;
+	background: #428d90;
+	text-align: center;
+	width: 100%;
+}
+
+.logo h2{
+	font-weight: 500;
+}
+
+.menu{
+	margin-top: 70px;
+	display: flex;
+	flex-direction: column;
+	
+}
+
+.menu a{
+	padding: 20px;
+	font-weight: 500;
+	color: #f5f5f5;
+	text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
+}
+
+.menu a i {
+    margin-right: 20px;
+}
+
+.menu a:hover{
+	background: #428d90;
+	transition-duration: .1s;
+}
+.menu button:hover{
+	background: #428d90;
+	transition-duration: .1s;
+}
+
+.main{
+	position: absolute;
+	margin-left: 250px;
+	margin-top: 70px;
+	padding: 0 10px;
+}
+
+/* MEDIA QUERY OF RESPOSIVE */
+@media screen and (min-width: 575px){
+  .main{
+	  background: #428d90;
+  }
+}

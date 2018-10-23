@@ -64,6 +64,6 @@ table tr td{
   opacity: 1;
 }
 .fade-exit-active {
-  opacity: 0.01;
+  opacity: .01;
   transition: opacity 300ms ease-in;
 }
