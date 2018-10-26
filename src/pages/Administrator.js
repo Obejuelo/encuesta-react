@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 
 import { logOut } from '../actions/userActions';
-import Sidebar from '../components/navigation/SideBar';
 import Adminbar from '../components/navigation/Adminbar';
 
 class Administrator extends Component {
+
+	componentDidMount(){
+		// console.log(this.props.admin);
+	}
 
 	signOut = () => {
 		this.props.dispatch(logOut());
@@ -29,9 +32,7 @@ class Administrator extends Component {
 	render() { 
 		return (
 			<div className="page" style={{width: '100%'}}>
-				<Adminbar show={this.showMenu}/>
-				<Sidebar logout={this.signOut} ref={this.menuRef}/>
-				<div className='opacity' onClick={this.hideMenu}></div>
+				<Adminbar/>
 			</div>
 		);
 	}

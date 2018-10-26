@@ -22,7 +22,7 @@ class Formquestions extends Component {
 			if (this.state.answers !== null) {
 				this.props.history.push('/')
 			}
-		}, 0);
+		}, 10);
 		
 	}
 

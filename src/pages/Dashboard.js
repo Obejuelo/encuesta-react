@@ -10,7 +10,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 
 import {Link, withRouter} from 'react-router-dom';
 
@@ -104,7 +103,7 @@ class Dashboard extends Component {
 				<Button 
 					variant="fab"
 					className="FAB">
-					<AddIcon />
+					<i className="fas fa-envelope" style={{fontSize: '1.5em'}}></i>
 				</Button>
 				<div className="container" style={{ maxWidth: '100%' }}>
 					<h1 style={{textAlign: 'center'}}>{this.props.user.grupo}</h1>

@@ -67,3 +67,9 @@ table tr td{
   opacity: .01;
   transition: opacity 300ms ease-in;
 }
+
+/* MANAGEMENT */
+
+.main{
+  font-weight: 500 !important;
+}
