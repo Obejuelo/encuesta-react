@@ -3,20 +3,35 @@ import {connect} from 'react-redux';
 
 import { logOut } from '../actions/userActions';
 import Sidebar from '../components/navigation/SideBar';
+import Adminbar from '../components/navigation/Adminbar';
 
 class Administrator extends Component {
-	state = {}
 
 	signOut = () => {
 		this.props.dispatch(logOut());
 		this.props.history.push('/admin');
 	}
 
+	showMenu = () => {
+		let menu = document.querySelector('.sidebar');
+		let op = document.querySelector('.opacity');
+		menu.style.transform = 'translateX(0px)';
+		op.style.display = 'block';
+	}
+
+	hideMenu(){
+		let op = document.querySelector('.opacity');
+		let menu = document.querySelector('.sidebar');
+		menu.style.transform = 'translateX(-250px)'
+		op.style.display = 'none';
+	}
+
 	render() { 
 		return (
-			<div className="">
-				<Sidebar logout={this.signOut}/>
-				<div className="main page"><h3>hola mundo</h3></div>
+			<div className="page" style={{width: '100%'}}>
+				<Adminbar show={this.showMenu}/>
+				<Sidebar logout={this.signOut} ref={this.menuRef}/>
+				<div className='opacity' onClick={this.hideMenu}></div>
 			</div>
 		);
 	}
