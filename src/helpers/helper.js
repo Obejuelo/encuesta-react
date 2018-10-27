@@ -75,3 +75,16 @@ export const loginAdmin = (body) => {
 		 .then(res => res.json())
 		 .catch(err => { console.log(err); })
  }
+
+ //SEND MATTERS BY EXCEL FILE
+export const setTeacherByFile = (data, token) => {
+	return fetch(`${url}teacher`, {
+		method: 'POST',
+		body: data,
+		headers: {
+			'token': token
+		}
+	})
+		.then(res => res.json())
+		.catch(err => { console.log(err); })
+}
