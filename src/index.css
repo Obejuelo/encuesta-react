@@ -73,3 +73,12 @@ table tr td{
 .main{
   font-weight: 500 !important;
 }
+
+/* PAGE MATTERS */
+.card-teacher{
+  padding: 20px 30px;
+  margin-top: 29px;
+  overflow: auto !important;
+  max-height: 500px;
+  min-height: 500px;
+}

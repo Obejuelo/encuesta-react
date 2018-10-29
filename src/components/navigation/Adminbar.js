@@ -38,7 +38,7 @@ class Adminbar extends Component {
 	render() { 
 		return (
 			<div>
-				<AppBar position="static" style={{ background: '#006064', zIndex:'1'}}>
+				<AppBar position="static" style={{ background: '#006064',position:'fixed', zIndex:'1'}}>
 					<Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
 						<i className="fas fa-bars" style={{ cursor: 'pointer', fontSize: '1.5em' }} onClick={this.showMenu}></i>
 						<Link to="/" style={{textDecoration:'none',color:'#f5f5f5'}}>

@@ -62,7 +62,7 @@ export const loginAdmin = (body) => {
 		 .catch(err => { console.log(err); })
  }
 
- //GET NAME MATTER
+ //GET NAME MATTER BY NAME
  export const getMatter =(matter) => {
 	 return fetch(`${url}matter/${matter}`)
 		 .then(res => res.json())
@@ -82,6 +82,28 @@ export const setTeacherByFile = (data, token) => {
 		method: 'POST',
 		body: data,
 		headers: {
+			'token': token
+		}
+	})
+		.then(res => res.json())
+		.catch(err => { console.log(err); })
+}
+
+//GET NAME TEACHER BY NAME
+export const getTeacher = () => {
+	return fetch(`${url}teacher`)
+		.then(res => res.json())
+		.catch(err => { console.log(err); })
+}
+
+//SET TEACHER
+export const setTeacher = (body, token) => {
+	return fetch(`${url}teacher/excel`, {
+		method: 'POST',
+		body: JSON.stringify(body),
+		headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json',
 			'token': token
 		}
 	})
