@@ -32,7 +32,9 @@ class Formfile extends Component {
 					<form onSubmit={this.props.file}>
 						<input type="file" id="file" name="file" className="file" required/>
 						{this._renderButton()}
-						<div style={{ cursor: 'pointer', color: '#005f63'}} onClick={this.props.modal}><p>Individual</p></div>
+						<div style={{ cursor: 'pointer', color: '#005f63'}} onClick={this.props.modal}>
+							<p style={{margin: '5px 0 0 0'}}>Agregar un maestro</p>
+						</div>
 					</form>
 				</Card>
 			</div>
