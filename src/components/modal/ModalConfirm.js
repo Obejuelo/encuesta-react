@@ -14,7 +14,16 @@ class Modalconfirm extends Component {
 			modal.style.display = 'none';
 			cardForm.style.display = 'none';
 			contentModal.style.display = 'none';
+
+			this.props.clear();
 		}, 250);
+	}
+
+	_delete = async () => {
+		let delet = await  this.props.delete;
+		delet();
+		let hide = await this._hideModal;
+		hide();
 	}
 
 	render() { 
@@ -35,6 +44,7 @@ class Modalconfirm extends Component {
 						</Button>
 					<Button
 						variant="contained"
+						onClick={this._delete}
 						style={{ background: '#D32F2F', color: '#fff', margin: '20px 10px 0 10px' }}>
 						Eliminar
 						</Button>

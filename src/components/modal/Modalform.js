@@ -23,7 +23,7 @@ class Modalform extends Component {
 		}, 250);
 	}
 
-	_handleSubmit = (e) => {
+	_handleSubmit = async (e) => {
 		e.preventDefault();
 		let inputClave = document.getElementById('inputClave')
 		let inputName = document.getElementById('inputName')
@@ -33,7 +33,10 @@ class Modalform extends Component {
 			nombre: inputName.value
 		}
 
-		this.props.sendOne(body)
+		await this.props.sendOne(body)
+		await this._hideModal();
+
+		await document.querySelector('.form').reset();
 	}
 
 	render() { 
@@ -43,7 +46,7 @@ class Modalform extends Component {
 				</div>
 				<Card className="cardForm" style={{textAlign: 'center'}}>
 					<h3 style={{fontWeight: '500', margin: '0'}}>Agregar maestro</h3>
-					<form onSubmit={this._handleSubmit}>
+					<form onSubmit={this._handleSubmit} className="form">
 						<TextField
 							label="Clave"
 							margin="normal"

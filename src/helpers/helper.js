@@ -89,7 +89,7 @@ export const setTeacherByFile = (data, token) => {
 		.catch(err => { console.log(err); })
 }
 
-//GET NAME TEACHER BY NAME
+//GET TEACHER BY NAME
 export const getTeacher = () => {
 	return fetch(`${url}teacher`)
 		.then(res => res.json())
@@ -106,6 +106,16 @@ export const setTeacher = (body, token) => {
 			'Accept': 'application/json',
 			'token': token
 		}
+	})
+		.then(res => res.json())
+		.catch(err => { console.log(err); })
+}
+
+//DELETE TEACHER
+export const deleteTeacher = (id, token) => {
+	return fetch(`${url}teacher/${id}`, {
+		method: 'DELETE',
+		headers: {'token': token}
 	})
 		.then(res => res.json())
 		.catch(err => { console.log(err); })

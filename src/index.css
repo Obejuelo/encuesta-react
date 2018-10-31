@@ -77,16 +77,22 @@ table tr td{
   font-weight: 500 !important;
 }
 
-/* PAGE MATTERS */
+/* PAGE TEACHERS */
 .card-teacher{
-  padding: 20px 30px;
+  padding: 20px 40px 10px;
   margin-top: 29px;
   overflow: auto !important;
-  max-height: 500px;
-  min-height: 500px;
+  max-height: 550px;
 }
 
-.teach-card
+.card-teacher li{
+  padding: 5px;
+}
+
+.card-teacher li:hover{
+  background: rgba(115, 190, 180, 0.5);
+  transition-duration: .1s;
+}
 
 .edit i{
   margin: 0 7px;
@@ -98,7 +104,7 @@ table tr td{
   animation: rebot .3s 1;
 }
 .edit i:active{
-  transform: scale(1.09);
+  transform: scale(1);
 }
 
 .edit i:nth-child(1){color: red;}
@@ -110,6 +116,28 @@ table tr td{
   30%{transform: rotate(-30deg)}
   70%{transform: rotate(20deg)}
   100%{transform: rotate(0deg) scale(1.25)}
+}
+
+/* PAGINATE */
+.paginate{
+  margin-top: 30px;
+}
+
+.paginate .span{
+  background: #006064;
+  display: inline-block;
+  width: 25px;
+  border-radius: 3px;
+  padding: 3px 0;
+  color: #f5f5f5;
+  margin: 0 auto;
+  cursor: pointer;
+  margin: 0 .5px;
+}
+
+.paginate .span:hover{
+  transform: translateY(-3px);
+  transition-duration: .2s;
 }
 
 /* RESPONSIVE DESIGN */

@@ -7,7 +7,7 @@ import Dashboard from './Dashboard';
 import Califica from './Califica';
 import Admin from './Admin';
 import Administrator from './Administrator';
-import Matter from './Matter';
+import Teacher from './Teacher';
 
 import {
 	CSSTransition,
@@ -51,7 +51,7 @@ class Home extends Component {
 								<Route exact path="/" component={this.home()} />
 								<Route exact path="/califica/:materia" component={Califica} />
 								<Route exact path="/admin" component={this.admin()} />
-								<Route exact path="/matter" component={Matter} />
+								<Route exact path="/teacher" component={Teacher} />
 							</Switch>
 						</CSSTransition>
 					</TransitionGroup>

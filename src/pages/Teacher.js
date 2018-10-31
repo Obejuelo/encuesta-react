@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import Adminbar from '../components/navigation/Adminbar';
-import { setTeacherByFile, getTeacher, setTeacher } from '../helpers/helper';
+import { setTeacherByFile, getTeacher, setTeacher, deleteTeacher } from '../helpers/helper';
 import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
 
 import Formfile from '../components/formquestions/FormFile';
 import Modalform from '../components/modal/Modalform';
 import Modalconfirm from '../components/modal/ModalConfirm';
+import Paginate from '../components/paginate/Paginate';
+
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 class Matter extends Component {
 	
@@ -14,14 +17,12 @@ class Matter extends Component {
 
 	state = {
 		teachers:[],
-		data: []
+		data: [],
+		total:'',
+		id:''
 	}
 
 	componentDidMount(){
-		setTimeout(() => {
-			console.log(this.state.data.length);
-			
-		}, 1000);
 		this.getTeacher();
 	}
 
@@ -34,35 +35,65 @@ class Matter extends Component {
 
 		setTeacherByFile(fileData, this.props.admin.jwt)
 			.then(data => {
-				// console.log(data);
 				this.setState({teachers: data})
 			})
 	}
 
 	getTeacher = () => {
 		getTeacher().then(data => {
+			this.setState({ total: data.total })
 			this.setState({ data: data.docs })
 		})
 	}
 
-	_setTeacher = async () => {
-		this.state.teachers.forEach(teach => {
-			let body = {
-				clave: teach.Clave,
-				nombre: teach.Nombre
-			}
-			
-			setTeacher(body, this.token)
-				.then(data => {
-					console.log('ok');
-				})
+	_setTeacher = () => {
+		return new Promise((response, reject) => {
+			let total = this.state.teachers.length;
+			this.state.teachers.forEach((teach, idx) => {
+				idx++;
+				let body = {
+					clave: teach.Clave,
+					nombre: teach.Nombre
+				}
+
+				setTeacher(body, this.token)
+					.then(() => {
+						if(total === idx){
+							response('datos enviados');
+							this.props.history.push('/matter')
+						}
+					})
+			})
 		})
 	}
 
-	_setTeacherOne = async (body) => {
-		let resp = await setTeacher(body, this.token)
+	result = async () => {
+		let response = await this._setTeacher();
+		console.log(response);
+	}
 
-		console.log(resp);
+	_setTeacherOne = async (body) => {
+		let data = this.state.data;
+		let resp = await setTeacher(body, this.token)
+		data.push(resp);
+		this.setState({data})
+	}
+
+	_deleteTeacher = async () => {
+		let id = this.state.id;
+		await deleteTeacher(id, this.token)
+		
+		// let data = await getTeacher();
+		// this.setState({ data: data.docs })
+		await this.setState(state => ({
+			data: state.data.filter(
+				item => item._id !== id
+			),
+		}));
+	} 
+
+	_clearId = () => {
+		this.setState({id: ''});
 	}
 
 	_showModal = () => {
@@ -76,7 +107,7 @@ class Matter extends Component {
 		cardForm.style.animation = '.3s show 1';
 	}
 
-	_showConfirm = () => {
+	_showConfirm = (id) => {
 		let modal = document.querySelector('.modal-confirm');
 		let cardForm = document.querySelector('.cardForm-confirm');
 		let contentModal = document.querySelector('.content-confirm');
@@ -85,6 +116,8 @@ class Matter extends Component {
 		contentModal.style.display = 'flex';
 		modal.style.animation = '.3s fadeIn 1';
 		cardForm.style.animation = '.3s show 1';
+
+		this.setState({id: id})
 	}
 
 	_renderName = () => {
@@ -111,23 +144,31 @@ class Matter extends Component {
 		return(
 			<Card className="card-teacher teach-card">
 				<h3 style={{ textAlign: 'center', margin: '0 0 10px 0' }}>Registros en la base de datos</h3>
+				<TransitionGroup className="todo-list">
 				{this.state.data.map((teacher, idx) => {
-					return (<li key={idx}
-						style={{
+					return (
+					<CSSTransition
+						key={idx}
+						timeout={500}
+						classNames="fade"
+					>
+					<li style={{
 							listStyle: 'none',
 							borderBottom: 'solid 1px rgba(0,0,0,0.4)',
-							marginBottom: '10px',
 							textAlign: 'left'
 						}}>
 						{teacher.clave} - {teacher.nombre}
 
 						<span style={{float:'right'}} className="edit">
-							<i className="far fa-trash-alt" onClick={this._showConfirm}></i>
+							<i className="far fa-trash-alt" onClick={() => {this._showConfirm(teacher._id)}}></i>
 							<i className="far fa-edit"></i>
 						</span>
-					</li>)
+					</li>
+					</CSSTransition>)
 				})
 				}
+				</TransitionGroup>
+				<Paginate pages={this.state.total}/>
 			</Card>
 		)
 	}
@@ -142,7 +183,7 @@ class Matter extends Component {
 							<Formfile 
 								file={this._andleSubmit} 
 								teach={this.state.teachers} 
-								send={this._setTeacher}
+								send={this.result}
 								modal={this._showModal}/>
 						</div>
 						<div className="col-xs-12 col-sm-10 col-md-8 col-lg-5">
@@ -153,7 +194,7 @@ class Matter extends Component {
 					</div>
 				</section>
 				<Modalform sendOne={this._setTeacherOne}/>
-				<Modalconfirm/>
+				<Modalconfirm delete={this._deleteTeacher} clear={this._clearId}/>
 			</div>
 		);
 	}

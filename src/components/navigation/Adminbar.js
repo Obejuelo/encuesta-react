@@ -49,7 +49,7 @@ class Adminbar extends Component {
 				<div className="sidebar">
 					<div className="logo"><h2>Dashboard</h2></div>
 					<nav className="menu">
-						<Link to="/matter"><i className="fas fa-chalkboard-teacher"></i><span>Maestros</span></Link>
+						<Link to="/teacher"><i className="fas fa-chalkboard-teacher"></i><span>Maestros</span></Link>
 						<Link to="/"><i className="fas fa-user-graduate"></i><span>Estudiantes</span></Link>
 						<Link to="/"><i className="fas fa-book"></i><span>Materias</span></Link>
 						<Link to="/"><i className="fas fa-database"></i><span>Relación</span></Link>
